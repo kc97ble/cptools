@@ -5,6 +5,8 @@
     "md-to-tex"
   ],
   "devDependencies": {
+    "@types/node": "^20.10.4",
+    "sort-package-json": "^2.6.0",
     "typescript": "^5.3.3"
   }
 }
