@@ -1,0 +1,10 @@
+{
+  "name": "md2pdf-for-problem-setters",
+  "packageManager": "yarn@4.0.2",
+  "workspaces": [
+    "md-to-tex"
+  ],
+  "devDependencies": {
+    "typescript": "^5.3.3"
+  }
+}
