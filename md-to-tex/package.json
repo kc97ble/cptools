@@ -1,20 +1,24 @@
 {
   "name": "md-to-tex",
-  "bin": "bin/index.js",
+  "bin": "bin/md-to-tex.prod.js",
   "scripts": {
     "build": "tsc",
+    "clean": "rimraf dist/ node_modules/",
     "postinstall": "sort-package-json"
   },
   "dependencies": {
     "@types/js-yaml": "^4.0.9",
+    "@types/minimist": "^1.2.5",
+    "@types/node": "^20.10.4",
     "js-yaml": "^4.1.0",
     "marked": "^11.1.0",
     "minimist": "^1.2.8",
+    "ts-node": "^10.9.2",
     "zod": "^3.22.4"
   },
   "devDependencies": {
+    "rimraf": "^5.0.5",
     "sort-package-json": "^2.6.0",
-    "ts-node": "^10.9.2",
     "typescript": "^5.3.3"
   }
 }
