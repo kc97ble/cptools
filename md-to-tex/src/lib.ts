@@ -7,6 +7,7 @@ export async function convertMdToTex(text: string) {
     [
       "\\documentclass[12pt,a4paper,oneside]{article}",
       REQUIRED_PACKAGES.join("\n"),
+      "\\renewcommand{\\baselinestretch}{1.2}",
       "\\begin{document}",
       body,
       "\\end{document}",

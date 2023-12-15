@@ -16,22 +16,37 @@ const OPERATORS: Partial<Record<string, string>> = {
 export function renderCodeInline(code: string) {
   let m: RegExpMatchArray | null = null;
 
-  if ((m = code.match(/^\$(.*)\$$/))) {
+  if ((m = code.match(/^\$((?:\\\$|[^$])*)\$$/))) {
     return `$${m[1]}$`;
-  } else if ((m = code.match(/^\"(.*)\"$/))) {
+  } else if ((m = code.match(/^\"((?:\\\"|[^"])*)\"$/))) {
     return "\\texttt{" + literal.textMode(m[1]) + "}";
-  } else if ((m = code.match(/^\'(.*)\'$/))) {
+  } else if ((m = code.match(/^\'((?:\\\'|[^'])*)\'$/))) {
     return "\\texttt{" + literal.textMode(m[1]) + "}";
   }
 
   const chunks: string[] = [];
 
   while (code) {
-    if ((m = code.match(/^([!*<=>]+)(.*)$/))) {
+    if ((m = code.match(/^\$((?:\\\$|[^$])*)\$(.*)$/))) {
+      chunks.push(`{${m[1]}}`);
+      code = m[2];
+    } else if ((m = code.match(/^\"((?:\\\"|[^"])*)\"(.*)$/))) {
+      chunks.push("\\mathtt{" + literal.mathMode(m[1]) + "}");
+      code = m[2];
+    } else if ((m = code.match(/^\'((?:\\\'|[^'])*)\'(.*)$/))) {
+      chunks.push("\\mathtt{" + literal.mathMode(m[1]) + "}");
+      code = m[2];
+    } else if ((m = code.match(/^([!*<=>]+)(.*)$/))) {
       chunks.push(OPERATORS[m[1]] || m[1]);
       code = m[2];
     } else if ((m = code.match(/^([A-Za-z][A-Za-z0-9]*)(.*)$/))) {
       chunks.push(m[1].length > 1 ? "\\mathit{" + m[1] + "}" : m[1]);
+      code = m[2];
+    } else if ((m = code.match(/^([0-9](?:[0-9]|[,][0-9]|[.])*)(.*)$/))) {
+      chunks.push(m[1].replace(/,/g, "\\,"));
+      code = m[2];
+    } else if ((m = code.match(/^([_^])(.*)$/))) {
+      chunks.push(m[1]);
       code = m[2];
     } else {
       chunks.push(literal.mathMode(code[0]));
@@ -58,12 +73,12 @@ export function renderTestCases(list: TestCase[]) {
       yield* test.input
         .trim()
         .split("\n")
-        .map((line) => line || "~");
+        .map((line) => literal.codeMode(line) || "~");
       yield "  }{%";
       yield* test.output
         .trim()
         .split("\n")
-        .map((line) => line || "~");
+        .map((line) => literal.codeMode(line) || "~");
       yield "  }%";
     }
     yield "\\end{example}%";
@@ -76,17 +91,17 @@ export function renderTestCases(list: TestCase[]) {
       yield* test.input
         .trim()
         .split("\n")
-        .map((line) => line || "~");
+        .map((line) => literal.codeMode(line) || "~");
       yield "  }{%";
       yield* test.output
         .trim()
         .split("\n")
-        .map((line) => line || "~");
+        .map((line) => literal.codeMode(line) || "~");
       yield "  }{%";
       yield* (test.notes || "")
         .trim()
         .split("\n")
-        .map((line) => line || "~");
+        .map((line) => literal.codeMode(line) || "~");
       yield "  }%";
     }
     yield "\\end{examplethree}%";
@@ -116,6 +131,10 @@ export function renderCodeBlock(code: string, infostring: string | undefined) {
         );
       }
     }
+    default: {
+      return (
+        "\\begin{verbatim}\n" + literal.codeMode(code), "\n\\end{verbatim}\n\n"
+      );
+    }
   }
-  return "";
 }

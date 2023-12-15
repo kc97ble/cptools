@@ -10,7 +10,11 @@ const Params = z.object({
 });
 
 export async function main() {
-  const argv = minimist(process.argv.slice(2));
+  const argv = minimist(process.argv.slice(2), {
+    alias: { input: ["i"], output: ["o"] },
+    default: { input: "/dev/stdin", output: "/dev/stdout" },
+    string: ["input", "output"],
+  });
 
   if (argv.help || argv.h) {
     console.log(
@@ -25,11 +29,7 @@ export async function main() {
     process.exit(0);
   }
 
-  const params = Params.parse({
-    input: argv.input || argv.i || "/dev/stdin",
-    output: argv.output || argv.o || "/dev/stdout",
-  });
-
+  const params = Params.parse(argv);
   const md = await fs.promises.readFile(params.input, "utf-8");
   const tex = await convertMdToTex(md);
   await fs.promises.writeFile(params.output, tex, "utf-8");
