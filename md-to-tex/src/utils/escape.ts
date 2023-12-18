@@ -27,7 +27,7 @@ const ESCAPE_MATH: Partial<Record<string, string>> = {
   $: "{\\$}",
 };
 
-const ESCAPE_CODE: Partial<Record<string, string>> = {
+const ESCAPE_EXMP: Partial<Record<string, string>> = {
   _: "{\\_}",
   "-": "{-}",
   "'": "\\textquotesingle{}",
@@ -47,6 +47,8 @@ const ESCAPE_CODE: Partial<Record<string, string>> = {
   $: "{\\$}",
 };
 
+const ESCAPE_VERB: Partial<Record<string, string>> = {};
+
 function regexSpecialChars() {
   // generate new instance for every use
   return /[\\{}$&#^_~%<>|"'`+-]/g;
@@ -57,6 +59,8 @@ export const literal = {
     text.replace(regexSpecialChars(), (char) => ESCAPE_TEXT[char] || char),
   mathMode: (text: string) =>
     text.replace(regexSpecialChars(), (char) => ESCAPE_MATH[char] || char),
-  codeMode: (text: string) =>
-    text.replace(regexSpecialChars(), (char) => ESCAPE_CODE[char] || char),
+  exmpMode: (text: string) =>
+    text.replace(regexSpecialChars(), (char) => ESCAPE_EXMP[char] || char),
+  verbMode: (text: string) =>
+    text.replace(regexSpecialChars(), (char) => ESCAPE_VERB[char] || char),
 };
