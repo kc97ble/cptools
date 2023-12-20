@@ -1,7 +1,8 @@
 #!/usr/bin/env node
 
 require("ts-node").register();
-const { main } = require("../dist/cli.js");
+const path = require("path");
+const { main } = require(path.resolve(__dirname, "../src/cli.ts"));
 
 main().catch((e) => {
   console.error(e);

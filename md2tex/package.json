@@ -1,6 +1,6 @@
 {
-  "name": "md-to-tex",
-  "bin": "bin/md-to-tex.prod.js",
+  "name": "md2tex",
+  "bin": "bin/md2tex.prod.js",
   "scripts": {
     "build": "tsc",
     "clean": "rimraf dist/ node_modules/",

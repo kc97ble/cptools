@@ -497,9 +497,19 @@ __metadata:
   languageName: node
   linkType: hard
 
-"md-to-tex@workspace:md-to-tex":
+"md2pdf-for-problem-setters@workspace:.":
   version: 0.0.0-use.local
-  resolution: "md-to-tex@workspace:md-to-tex"
+  resolution: "md2pdf-for-problem-setters@workspace:."
+  dependencies:
+    "@types/node": "npm:^20.10.4"
+    sort-package-json: "npm:^2.6.0"
+    typescript: "npm:^5.3.3"
+  languageName: unknown
+  linkType: soft
+
+"md2tex@workspace:md2tex":
+  version: 0.0.0-use.local
+  resolution: "md2tex@workspace:md2tex"
   dependencies:
     "@types/js-yaml": "npm:^4.0.9"
     "@types/minimist": "npm:^1.2.5"
@@ -513,17 +523,7 @@ __metadata:
     typescript: "npm:^5.3.3"
     zod: "npm:^3.22.4"
   bin:
-    md-to-tex: bin/md-to-tex.prod.js
-  languageName: unknown
-  linkType: soft
-
-"md2pdf-for-problem-setters@workspace:.":
-  version: 0.0.0-use.local
-  resolution: "md2pdf-for-problem-setters@workspace:."
-  dependencies:
-    "@types/node": "npm:^20.10.4"
-    sort-package-json: "npm:^2.6.0"
-    typescript: "npm:^5.3.3"
+    md2tex: bin/md2tex.prod.js
   languageName: unknown
   linkType: soft
 
