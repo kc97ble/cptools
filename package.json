@@ -2,7 +2,8 @@
   "name": "md2pdf-for-problem-setters",
   "packageManager": "yarn@4.0.2",
   "workspaces": [
-    "md2tex"
+    "md2tex",
+    "json2zip"
   ],
   "devDependencies": {
     "@types/node": "^20.10.4",
