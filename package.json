@@ -4,7 +4,8 @@
   "workspaces": [
     "md2tex",
     "json2zip",
-    "tex2pdf"
+    "tex2pdf",
+    "ini2zip"
   ],
   "devDependencies": {
     "@types/node": "^20.10.4",
